@@ -13,10 +13,22 @@
         <action
             android:id="@+id/action_dogListFragment_to_dogDetailsFragment"
             app:destination="@id/dogDetailsFragment" />
+        <action
+            android:id="@+id/action_dogListFragment_to_dogDataFragment"
+            app:destination="@id/dogDataFragment" />
     </fragment>
     <fragment
         android:id="@+id/dogDetailsFragment"
         android:name="com.example.roomwithmvvm.view.DogDetailsFragment"
         android:label="fragment_dog_details"
-        tools:layout="@layout/fragment_dog_details" />
+        tools:layout="@layout/fragment_dog_details" >
+        <argument
+            android:name="dog"
+            app:argType="com.example.roomwithmvvm.model.Dog" />
+    </fragment>
+    <fragment
+        android:id="@+id/dogDataFragment"
+        android:name="com.example.roomwithmvvm.view.DogDataFragment"
+        android:label="fragment_dog_data"
+        tools:layout="@layout/fragment_dog_data" />
 </navigation>

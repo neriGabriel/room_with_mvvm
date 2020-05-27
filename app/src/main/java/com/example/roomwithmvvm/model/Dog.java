@@ -1,18 +1,47 @@
 package com.example.roomwithmvvm.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.io.Serializable;
+
+@Entity(tableName = "tb_dog")
 @JsonIgnoreProperties({"description", "history"})
-public class Dog {
+public class Dog implements Serializable {
+    @Ignore
     private Weight weight;
+    @Ignore
     private Height height;
+
+    @PrimaryKey()
+    @ColumnInfo(name = "dog_id")
+    @NonNull
     private Integer id;
+
+    @ColumnInfo(name = "dog_name")
     private String name;
+
+    @ColumnInfo(name = "dog_country_code")
     private String country_code;
+
+    @ColumnInfo(name = "dog_bred_for")
     private String bred_for;
+
+    @ColumnInfo(name = "dog_breed_group")
     private String breed_group;
+
+    @ColumnInfo(name = "dog_life_span")
     private String life_span;
+
+    @ColumnInfo(name = "dog_temperament")
     private String temperament;
+
+    @ColumnInfo(name = "dog_origin")
     private String origin;
 
     public Weight getWeight() {
@@ -35,7 +64,7 @@ public class Dog {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(@NonNull Integer id) {
         this.id = id;
     }
 

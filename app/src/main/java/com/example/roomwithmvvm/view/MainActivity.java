@@ -1,26 +1,22 @@
 package com.example.roomwithmvvm.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.example.roomwithmvvm.R;
 import com.example.roomwithmvvm.databinding.ActivityMainBinding;
-import com.example.roomwithmvvm.model.Dog;
-import com.example.roomwithmvvm.retrofit.RetrofitConfig;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-   /*private RetrofitConfig retrofitConfig;
-    private Call<List<Dog>> request;*/
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,19 +24,20 @@ public class MainActivity extends AppCompatActivity {
         this.binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(this.binding.getRoot());
 
-        /*this.retrofitConfig = new RetrofitConfig();
-
-        this.request = retrofitConfig.getDogAPI().getAllDogs();
-        this.request.enqueue(new Callback<List<Dog>>() {
-            @Override
-            public void onResponse(Call<List<Dog>> call, Response<List<Dog>> response) {
-                Log.d("MainActivity", response.body().toString());
-            }
-
-            @Override
-            public void onFailure(Call<List<Dog>> call, Throwable t) {
-                Log.d("MainActivity", t.toString());
-            }
-        });*/
+        this.navController = Navigation.findNavController(this, R.id.fragment);
+        NavigationUI.setupActionBarWithNavController(this, this.navController);
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        return NavigationUI.navigateUp(this.navController, (DrawerLayout) null);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
 }
