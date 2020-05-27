@@ -10,11 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.roomwithmvvm.R;
-import com.example.roomwithmvvm.adapter.DogAdapter;
 import com.example.roomwithmvvm.adapter.DogDataAdapter;
 import com.example.roomwithmvvm.databinding.FragmentDogDataBinding;
-import com.example.roomwithmvvm.databinding.FragmentDogDetailsBinding;
 import com.example.roomwithmvvm.model.Dog;
 import com.example.roomwithmvvm.viewmodel.DogDataViewModel;
 

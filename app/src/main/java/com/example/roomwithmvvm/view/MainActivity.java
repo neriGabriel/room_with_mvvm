@@ -7,20 +7,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.example.roomwithmvvm.R;
 import com.example.roomwithmvvm.databinding.ActivityMainBinding;
-import com.example.roomwithmvvm.model.Dog;
-import com.example.roomwithmvvm.retrofit.RetrofitConfig;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
