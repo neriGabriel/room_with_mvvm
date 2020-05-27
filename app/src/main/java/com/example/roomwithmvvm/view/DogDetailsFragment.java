@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ public class DogDetailsFragment extends Fragment {
 
     private FragmentDogDetailsBinding binding;
     private Dog dog;
+    private ActionBar actionBar;
     public DogDetailsFragment() {
     }
 
@@ -27,6 +30,8 @@ public class DogDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         this.binding = FragmentDogDetailsBinding.inflate(inflater, container, false);
         View v = binding.getRoot();
+        this.actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        this.actionBar.setTitle("Dog details");
 
         return v;
     }

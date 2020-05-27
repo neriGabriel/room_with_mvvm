@@ -3,6 +3,8 @@ package com.example.roomwithmvvm.view;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
@@ -15,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.roomwithmvvm.R;
 import com.example.roomwithmvvm.adapter.DogAdapter;
@@ -35,6 +38,7 @@ public class DogListFragment extends Fragment implements LifecycleOwner {
     private DogAdapter dogAdapter;
     private List<Dog> dogList = new ArrayList<>();
     private DogListViewModel dogListViewModel;
+    private ActionBar actionBar;
 
     public DogListFragment() {
     }
@@ -46,6 +50,8 @@ public class DogListFragment extends Fragment implements LifecycleOwner {
         this.binding = FragmentDogListBinding.inflate(inflater, container, false);
         View v = binding.getRoot();
         setHasOptionsMenu(true);
+        this.actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        this.actionBar.setTitle("Dog list");
 
         this.dogAdapter = new DogAdapter(this.dogList);
         this.binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

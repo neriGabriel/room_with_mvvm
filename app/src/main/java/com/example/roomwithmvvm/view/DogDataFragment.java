@@ -2,6 +2,8 @@ package com.example.roomwithmvvm.view;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,6 +30,7 @@ public class DogDataFragment extends Fragment {
     private DogDataAdapter dogAdapter;
     private List<Dog> dogList = new ArrayList<>();
     private DogDataViewModel dogDataViewModel;
+    private ActionBar actionBar;
 
     public DogDataFragment() {
     }
@@ -38,6 +41,8 @@ public class DogDataFragment extends Fragment {
                              Bundle savedInstanceState) {
         this.binding = FragmentDogDataBinding.inflate(inflater, container, false);
         View v = binding.getRoot();
+        this.actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        this.actionBar.setTitle("Dog stored in device");
 
         this.dogAdapter = new DogDataAdapter(this.dogList);
         this.dogList.clear();
