@@ -18,5 +18,9 @@ public class RetrofitConfig {
     public DogAPI getDogAPI() {
         return this.config.create(DogAPI.class);
     }
+
+    public ImagemAPI getImageAPI() {
+        return this.config.create(ImagemAPI.class);
+    }
 }
 
