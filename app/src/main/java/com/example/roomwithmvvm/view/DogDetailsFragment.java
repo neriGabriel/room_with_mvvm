@@ -39,6 +39,8 @@ public class DogDetailsFragment extends Fragment {
         if(getArguments() != null) {
             this.dog = DogDetailsFragmentArgs.fromBundle(getArguments()).getDog();
             this.binding.textName.setText(this.dog.getName());
+            this.binding.textCategory.setText(this.dog.getBreed_group());
+            this.binding.textLifeSpan.setText(this.dog.getLife_span());
         }
     }
 }

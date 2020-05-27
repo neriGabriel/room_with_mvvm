@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.roomwithmvvm.R;
 import com.example.roomwithmvvm.adapter.DogAdapter;
@@ -54,24 +55,42 @@ public class DogListFragment extends Fragment implements LifecycleOwner {
 
         this.dogViewModel = new ViewModelProvider(this).get(DogViewModel.class);
 
+        this.dogList.clear();
+        this.getAllDogs();
 
+        this.binding.btnSincronizar.setOnClickListener(view -> {
+            this.dogList.clear();
+            if(this.binding.edtId.getText().toString().equals("")) {
+                this.getAllDogs();
+            }
+            else {
+                 this.getDogById(Integer.parseInt(this.binding.edtId.getText().toString()));
+            }
+
+        });
+
+
+        return v;
+    }
+
+    private void getAllDogs() {
         this.dogViewModel.getAllDogs().observe(getViewLifecycleOwner(), s -> {
             if(s != null) {
                 this.dogList.addAll(s);
                 this.dogAdapter.notifyDataSetChanged();
             }
         });
+    }
 
-        this.binding.btnSincronizar.setOnClickListener(view ->
-            dogViewModel.getDogById(1).observe(getViewLifecycleOwner(), s -> {
-            if(s != null) {
-                dogList.clear();
+    private void getDogById(int id) {
+        dogViewModel.getDogById(id).observe(getViewLifecycleOwner(), s -> {
+            if (s.getId() != null) {
                 dogList.add(s);
                 dogAdapter.notifyDataSetChanged();
+            } else {
+                Toast.makeText(getActivity(), "Nenhum cachorro foi econtrado o id informado", Toast.LENGTH_SHORT).show();
             }
-        }));
+        });
 
-
-        return v;
     }
 }

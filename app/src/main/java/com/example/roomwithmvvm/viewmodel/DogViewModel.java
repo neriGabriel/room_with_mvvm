@@ -1,5 +1,7 @@
 package com.example.roomwithmvvm.viewmodel;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -17,7 +19,6 @@ public class DogViewModel extends ViewModel {
 
     private final RetrofitConfig retrofitConfig;
     private MutableLiveData<List<Dog>> dogList = new MutableLiveData<>();
-    private MutableLiveData<Dog> dog = new MutableLiveData<>();;
 
     public DogViewModel() {
         this.retrofitConfig = new RetrofitConfig();
@@ -41,19 +42,19 @@ public class DogViewModel extends ViewModel {
     }
 
     public MutableLiveData<Dog> getDogById(int id) {
-        if(this.dog.getValue() == null) {
-            retrofitConfig.getDogAPI().getDogById(id).enqueue(new Callback<Dog>() {
-                @Override
-                public void onResponse(Call<Dog> call, Response<Dog> response) {
-                    dog.setValue(response.body());
-                }
+        MutableLiveData<Dog> dog = new MutableLiveData<>();
 
-                @Override
-                public void onFailure(Call<Dog> call, Throwable t) {
-                    dog.setValue(null);
-                }
-            });
-        }
+        retrofitConfig.getDogAPI().getDogById(id).enqueue(new Callback<Dog>() {
+            @Override
+            public void onResponse(Call<Dog> call, Response<Dog> response) {
+                dog.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Dog> call, Throwable t) {
+                dog.setValue(new Dog());
+            }
+        });
         return dog;
     }
 }
