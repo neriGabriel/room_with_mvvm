@@ -39,7 +39,6 @@ public class DogListFragment extends Fragment implements LifecycleOwner {
 
 
     public DogListFragment() {
-        // Required empty public constructor
     }
 
 

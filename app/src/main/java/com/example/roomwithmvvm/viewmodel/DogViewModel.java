@@ -16,45 +16,44 @@ import retrofit2.Response;
 public class DogViewModel extends ViewModel {
 
     private final RetrofitConfig retrofitConfig;
+    private MutableLiveData<List<Dog>> dogList = new MutableLiveData<>();
+    private MutableLiveData<Dog> dog = new MutableLiveData<>();;
 
     public DogViewModel() {
         this.retrofitConfig = new RetrofitConfig();
     }
 
     public MutableLiveData<List<Dog>> getAllDogs() {
+        if(this.dogList.getValue() == null) {
+            retrofitConfig.getDogAPI().getAllDogs().enqueue(new Callback<List<Dog>>() {
+                @Override
+                public void onResponse(Call<List<Dog>> call, Response<List<Dog>> response) {
+                    dogList.setValue(response.body());
+                }
 
-        MutableLiveData<List<Dog>> dogList = new MutableLiveData<>();
-
-        retrofitConfig.getDogAPI().getAllDogs().enqueue(new Callback<List<Dog>>() {
-            @Override
-            public void onResponse(Call<List<Dog>> call, Response<List<Dog>> response) {
-                dogList.setValue(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<List<Dog>> call, Throwable t) {
-                dogList.setValue(null);
-            }
-        });
-
+                @Override
+                public void onFailure(Call<List<Dog>> call, Throwable t) {
+                    dogList.setValue(null);
+                }
+            });
+        }
         return dogList;
     }
 
     public MutableLiveData<Dog> getDogById(int id) {
-        MutableLiveData<Dog> dog = new MutableLiveData<>();
+        if(this.dog.getValue() == null) {
+            retrofitConfig.getDogAPI().getDogById(id).enqueue(new Callback<Dog>() {
+                @Override
+                public void onResponse(Call<Dog> call, Response<Dog> response) {
+                    dog.setValue(response.body());
+                }
 
-        retrofitConfig.getDogAPI().getDogById(id).enqueue(new Callback<Dog>() {
-            @Override
-            public void onResponse(Call<Dog> call, Response<Dog> response) {
-                dog.setValue(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<Dog> call, Throwable t) {
-                dog.setValue(null);
-            }
-        });
-
+                @Override
+                public void onFailure(Call<Dog> call, Throwable t) {
+                    dog.setValue(null);
+                }
+            });
+        }
         return dog;
     }
 }
