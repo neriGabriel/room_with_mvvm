@@ -1,7 +1,4 @@
 package com.example.roomwithmvvm.viewmodel;
-
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -15,14 +12,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class DogViewModel extends ViewModel {
+public class DogListViewModel extends ViewModel {
 
     private final RetrofitConfig retrofitConfig;
+
     private MutableLiveData<List<Dog>> dogList = new MutableLiveData<>();
 
-    public DogViewModel() {
+    public DogListViewModel() {
         this.retrofitConfig = new RetrofitConfig();
     }
+
 
     public MutableLiveData<List<Dog>> getAllDogs() {
         if(this.dogList.getValue() == null) {

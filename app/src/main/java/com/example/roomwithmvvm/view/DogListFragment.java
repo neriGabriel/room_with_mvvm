@@ -2,13 +2,17 @@ package com.example.roomwithmvvm.view;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -17,15 +21,10 @@ import com.example.roomwithmvvm.R;
 import com.example.roomwithmvvm.adapter.DogAdapter;
 import com.example.roomwithmvvm.databinding.FragmentDogListBinding;
 import com.example.roomwithmvvm.model.Dog;
-import com.example.roomwithmvvm.retrofit.RetrofitConfig;
-import com.example.roomwithmvvm.viewmodel.DogViewModel;
+import com.example.roomwithmvvm.viewmodel.DogListViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 /**
@@ -36,8 +35,7 @@ public class DogListFragment extends Fragment implements LifecycleOwner {
     private FragmentDogListBinding binding;
     private DogAdapter dogAdapter;
     private List<Dog> dogList = new ArrayList<>();
-    private DogViewModel dogViewModel;
-
+    private DogListViewModel dogListViewModel;
 
     public DogListFragment() {
     }
@@ -48,12 +46,13 @@ public class DogListFragment extends Fragment implements LifecycleOwner {
                              Bundle savedInstanceState) {
         this.binding = FragmentDogListBinding.inflate(inflater, container, false);
         View v = binding.getRoot();
+        setHasOptionsMenu(true);
 
         this.dogAdapter = new DogAdapter(this.dogList);
         this.binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         this.binding.recyclerView.setAdapter(this.dogAdapter);
 
-        this.dogViewModel = new ViewModelProvider(this).get(DogViewModel.class);
+        this.dogListViewModel = new ViewModelProvider(this).get(DogListViewModel.class);
 
         this.dogList.clear();
         this.getAllDogs();
@@ -74,7 +73,7 @@ public class DogListFragment extends Fragment implements LifecycleOwner {
     }
 
     private void getAllDogs() {
-        this.dogViewModel.getAllDogs().observe(getViewLifecycleOwner(), s -> {
+        this.dogListViewModel.getAllDogs().observe(getViewLifecycleOwner(), s -> {
             if(s != null) {
                 this.dogList.addAll(s);
                 this.dogAdapter.notifyDataSetChanged();
@@ -83,7 +82,7 @@ public class DogListFragment extends Fragment implements LifecycleOwner {
     }
 
     private void getDogById(int id) {
-        dogViewModel.getDogById(id).observe(getViewLifecycleOwner(), s -> {
+        dogListViewModel.getDogById(id).observe(getViewLifecycleOwner(), s -> {
             if (s.getId() != null) {
                 dogList.add(s);
                 dogAdapter.notifyDataSetChanged();
@@ -92,5 +91,18 @@ public class DogListFragment extends Fragment implements LifecycleOwner {
             }
         });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.dadosCel:
+                NavDirections action = DogListFragmentDirections.actionDogListFragmentToDogDataFragment();
+                Navigation.findNavController(getView()).navigate(action);
+                return true;
+
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.roomwithmvvm.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.roomwithmvvm.R;
+import com.example.roomwithmvvm.database.DatabaseConnection;
 import com.example.roomwithmvvm.model.Dog;
 import com.example.roomwithmvvm.view.DogListFragmentDirections;
 
@@ -22,6 +24,8 @@ import java.util.List;
 public class DogAdapter extends RecyclerView.Adapter<DogAdapter.ViewHolder> {
 
     private List<Dog> dogList;
+    private DatabaseConnection connection;
+
 
     public DogAdapter(List<Dog> dogList) {
         this.dogList = dogList;
@@ -32,6 +36,7 @@ public class DogAdapter extends RecyclerView.Adapter<DogAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.dog_item, parent, false);
+        this.connection = DatabaseConnection.getInstance(parent.getContext());
 
         return new ViewHolder(itemView);
     }
@@ -46,7 +51,13 @@ public class DogAdapter extends RecyclerView.Adapter<DogAdapter.ViewHolder> {
                 Navigation.findNavController(view).navigate(action);
             });
             holder.downloadDog.setOnClickListener( view -> {
-                Toast.makeText(view.getContext(), "Aqui eu vou sincronizar localmente", Toast.LENGTH_SHORT).show();
+                Dog dog = connection.dogDao().getById(this.dogList.get(position).getId());
+                if(dog != null) {
+                    Toast.makeText(holder.cardItem.getContext(), "Dog já existente na base de dados! ", Toast.LENGTH_SHORT).show();
+                } else {
+                    connection.dogDao().insert(this.dogList.get(position));
+                    Toast.makeText(holder.cardItem.getContext(), "Dog vinculado a base de dados local! ", Toast.LENGTH_SHORT).show();
+                }
             });
     }
 
