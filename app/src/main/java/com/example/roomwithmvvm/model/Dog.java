@@ -2,8 +2,10 @@ package com.example.roomwithmvvm.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.io.Serializable;
+
 @JsonIgnoreProperties({"description", "history"})
-public class Dog {
+public class Dog implements Serializable {
     private Weight weight;
     private Height height;
     private Integer id;

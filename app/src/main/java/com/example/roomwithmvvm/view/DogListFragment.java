@@ -3,6 +3,8 @@ package com.example.roomwithmvvm.view;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -15,6 +17,7 @@ import com.example.roomwithmvvm.adapter.DogAdapter;
 import com.example.roomwithmvvm.databinding.FragmentDogListBinding;
 import com.example.roomwithmvvm.model.Dog;
 import com.example.roomwithmvvm.retrofit.RetrofitConfig;
+import com.example.roomwithmvvm.viewmodel.DogViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +30,13 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DogListFragment extends Fragment {
+public class DogListFragment extends Fragment implements LifecycleOwner {
 
     private FragmentDogListBinding binding;
     private DogAdapter dogAdapter;
     private List<Dog> dogList = new ArrayList<>();
-    private RetrofitConfig retrofitConfig;
-    private Call<List<Dog>> request;
+    private DogViewModel dogViewModel;
+
 
     public DogListFragment() {
         // Required empty public constructor
@@ -50,24 +53,25 @@ public class DogListFragment extends Fragment {
         this.binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         this.binding.recyclerView.setAdapter(this.dogAdapter);
 
-        this.retrofitConfig = new RetrofitConfig();
+        this.dogViewModel = new ViewModelProvider(this).get(DogViewModel.class);
 
-        this.request = retrofitConfig.getDogAPI().getAllDogs();
-        this.request.enqueue(new Callback<List<Dog>>() {
 
-            @Override
-            public void onResponse(Call<List<Dog>> call, Response<List<Dog>> response) {
-                Log.d("DogListFragment", response.body().toString());
-                dogList.addAll(response.body());
-                dogAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Dog>> call, Throwable t) {
-                Log.d("DogListFragment", "deu ruim!");
+        this.dogViewModel.getAllDogs().observe(getViewLifecycleOwner(), s -> {
+            if(s != null) {
+                this.dogList.addAll(s);
+                this.dogAdapter.notifyDataSetChanged();
             }
         });
+
+        this.binding.btnSincronizar.setOnClickListener(view ->
+            dogViewModel.getDogById(1).observe(getViewLifecycleOwner(), s -> {
+            if(s != null) {
+                dogList.clear();
+                dogList.add(s);
+                dogAdapter.notifyDataSetChanged();
+            }
+        }));
+
 
         return v;
     }

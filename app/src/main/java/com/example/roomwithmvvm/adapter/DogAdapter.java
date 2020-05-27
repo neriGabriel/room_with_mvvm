@@ -6,10 +6,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.roomwithmvvm.R;
 import com.example.roomwithmvvm.model.Dog;
+import com.example.roomwithmvvm.view.DogListFragmentDirections;
 
 import java.util.List;
 
@@ -34,6 +37,10 @@ public class DogAdapter extends RecyclerView.Adapter<DogAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.textName.setText(this.dogList.get(position).getName());
             holder.textLife.setText(this.dogList.get(position).getLife_span());
+            holder.textName.setOnClickListener(view -> {
+                NavDirections action = DogListFragmentDirections.actionDogListFragmentToDogDetailsFragment(this.dogList.get(position));
+                Navigation.findNavController(view).navigate(action);
+            });
     }
 
     @Override
