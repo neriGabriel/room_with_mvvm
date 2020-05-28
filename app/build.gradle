@@ -30,6 +30,13 @@ android {
     }
 
     /*
+        Databinding de informação
+    */
+    dataBinding {
+        enabled = true
+    }
+
+    /*
         Opções de compilação do java, neste caso altero para a versão 8
     */
     compileOptions {
