@@ -1,6 +1,7 @@
 package com.example.roomwithmvvm.view;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.roomwithmvvm.R;
 import com.example.roomwithmvvm.adapter.DogAdapter;
@@ -30,10 +30,6 @@ import com.example.roomwithmvvm.viewmodel.DogListViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class DogListFragment extends Fragment implements LifecycleOwner {
 
     private FragmentDogListBinding binding;
@@ -72,8 +68,7 @@ public class DogListFragment extends Fragment implements LifecycleOwner {
             else {
                  this.getDogById(Integer.parseInt(this.binding.edtId.getText().toString()));
             }
-            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            binding.edtId.setText("");
         });
 
 
@@ -85,6 +80,7 @@ public class DogListFragment extends Fragment implements LifecycleOwner {
             if(s != null) {
                 this.dogList.addAll(s);
                 this.dogAdapter.notifyDataSetChanged();
+                this.closeKeyBoard(getView(), getContext());
             }
         });
     }
@@ -94,6 +90,7 @@ public class DogListFragment extends Fragment implements LifecycleOwner {
             if (s.getId() != null) {
                 dogList.add(s);
                 dogAdapter.notifyDataSetChanged();
+                this.closeKeyBoard(getView(), getContext());
             } else {
                 Toast.makeText(getActivity(), "Nenhum cachorro foi econtrado o id informado", Toast.LENGTH_SHORT).show();
             }
@@ -101,6 +98,10 @@ public class DogListFragment extends Fragment implements LifecycleOwner {
 
     }
 
+    private void closeKeyBoard(@NonNull View view, @NonNull Context context) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {

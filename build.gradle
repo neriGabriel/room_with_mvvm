@@ -5,12 +5,20 @@ buildscript {
     repositories {
         google()
         jcenter()
+        /*
+            Repositório maven => necessário para o funcionamento do glide.
+            Link = https://github.com/bumptech/glide
+        */
         mavenCentral()
         maven { url 'https://maven.google.com' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.3'
 
+        /*
+            Dependencias para o navigation funcionar.
+            Precisa nesse build.gradle e no outro.
+        */
         def nav_version = "2.3.0-beta01"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
 

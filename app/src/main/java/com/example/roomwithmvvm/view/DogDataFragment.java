@@ -20,10 +20,6 @@ import com.example.roomwithmvvm.viewmodel.DogDataViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class DogDataFragment extends Fragment {
 
     private FragmentDogDataBinding binding;

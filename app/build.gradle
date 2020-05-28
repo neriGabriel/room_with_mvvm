@@ -22,10 +22,16 @@ android {
         }
     }
 
+    /*
+        ViewBinding de informações (pra não precisar ficar dando findViewById
+    */
     viewBinding {
         enabled = true
     }
 
+    /*
+        Opções de compilação do java, neste caso altero para a versão 8
+    */
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -37,7 +43,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
 
-    //Glide
+    //Dependencias do GLIDE
+    //Link => https://github.com/bumptech/glide
     compile 'com.github.bumptech.glide:glide:4.11.0'
 
     annotationProcessor 'androidx.annotation:annotation:1.1.0'
@@ -46,39 +53,40 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.11.0@aar") {
         transitive = true
     }
+    //Fim das dependencias do GLIDE
 
-    //Room
+    //Dependencias do ROOM
+    //Link => https://developer.android.com/training/data-storage/room
     def room_version = "2.2.5"
     implementation "androidx.room:room-runtime:$room_version"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor "androidx.room:room-compiler:$room_version"
+    //Fim das dependencias do ROOM
 
-    //Navigation
+
+    //Dependencias do NAVIGATION
+    //Link => https://developer.android.com/guide/navigation/navigation-getting-started
     def nav_version = "2.3.0-beta01"
-
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
+    //Fim das dependencias do NAVIGATION
 
-
+    //Dependencias do RETROFIT
+    //Link => https://square.github.io/retrofit/
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-jackson:2.9.0'
+    //Fim das dependencias do RETROFIT
 
-    //MVVM
+    //Dependencias do MVVM
+    //Link => https://developer.android.com/jetpack/docs/guide
     def lifecycle_version = "2.2.0"
-        // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
-        // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
-        // Lifecycles only (without ViewModel or LiveData)
     implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_version"
-        // Saved state module for ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
-        // Annotation processor
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
-        // alternately - if using Java8, use the following instead of lifecycle-compiler
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
-
-
+    //Fim das dependencias do MVVM
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
