@@ -31,7 +31,6 @@ public class DogDetailsFragment extends Fragment {
 
     private FragmentDogDetailsBinding binding;
     private Dog dog;
-    private Imagem imagem;
     private ActionBar actionBar;
     private DogDetailsViewModel dogDetailsViewModel;
     public DogDetailsFragment() {
@@ -60,10 +59,13 @@ public class DogDetailsFragment extends Fragment {
             this.binding.textLifeSpan.setText(this.dog.getLife_span());
 
             this.dogDetailsViewModel.getImagem(this.dog.getId()).observe(getViewLifecycleOwner(), s -> {
-                if(s != null) {
-                    imagem = s.get(0);
+                if(s.size() > 0) {
                     Glide.with(view)
-                            .load(imagem.getUrl())
+                            .load(s.get(0).getUrl())
+                            .into(this.binding.imageDog);
+                } else {
+                    Glide.with(view)
+                            .load("https://image.freepik.com/vetores-gratis/design-404-error-a-pagina-esta-perdida-e-a-mensagem-nao-encontrada-modelo-para-pagina-da-web-com-erro-404-design-de-linhas-modernas_6280-165.jpg")
                             .into(this.binding.imageDog);
                 }
             });
