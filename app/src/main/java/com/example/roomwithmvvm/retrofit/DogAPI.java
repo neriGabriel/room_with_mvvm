@@ -4,14 +4,15 @@ import com.example.roomwithmvvm.model.Dog;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface DogAPI {
     @GET("breeds/")
-    Call<List<Dog>> getAllDogs();
+    Observable<List<Dog>> getAllDogs();
 
     @GET("breeds/{id}")
-    Call<Dog> getDogById(@Path("id") int id);
+    Observable<Dog> getDogById(@Path("id") int id);
 }

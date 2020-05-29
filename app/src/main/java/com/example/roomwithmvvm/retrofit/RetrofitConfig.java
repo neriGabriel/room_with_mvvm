@@ -1,5 +1,6 @@
 package com.example.roomwithmvvm.retrofit;
 
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -12,6 +13,7 @@ public class RetrofitConfig {
         this.config = new Retrofit.Builder()
                                   .baseUrl(this.URL)
                                   .addConverterFactory(JacksonConverterFactory.create())
+                                  .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                                   .build();
     }
 

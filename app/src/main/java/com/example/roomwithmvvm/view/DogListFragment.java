@@ -14,6 +14,7 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -71,7 +72,6 @@ public class DogListFragment extends Fragment implements LifecycleOwner {
             binding.edtId.setText("");
         });
 
-
         return v;
     }
 
@@ -81,6 +81,9 @@ public class DogListFragment extends Fragment implements LifecycleOwner {
                 this.dogList.addAll(s);
                 this.dogAdapter.notifyDataSetChanged();
                 this.closeKeyBoard(getView(), getContext());
+                this.binding.btnSincronizar.setEnabled(true);
+            } else {
+                Toast.makeText(getContext(), "Não foi possível conectar a API", Toast.LENGTH_SHORT).show();
             }
         });
     }
